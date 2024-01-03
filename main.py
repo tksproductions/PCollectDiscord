@@ -107,6 +107,7 @@ async def purge(interaction: Interaction, amount: int):
     footer="Footer text for the embed (optional)",
     color="Hex color code for the embed (optional)",
     image_url="URL of the image to embed (optional)",
+    thumbnail_url="URL of the thumbnail to embed (optional)",
     message_id="ID of the message to edit (optional)")
 @discord.app_commands.default_permissions(administrator=True)
 async def embed(interaction: discord.Interaction, title: str, message: str, color: str = "FF2E98", footer: str = None, image_url: str = None, message_id: str = None):
@@ -126,6 +127,9 @@ async def embed(interaction: discord.Interaction, title: str, message: str, colo
 
     if image_url:
         embed.set_image(url=image_url)
+
+    if thumbnail_url:
+        embed.set_thumbnail(url=thumbnail_url)
 
     if message_id:
         channel = interaction.channel
