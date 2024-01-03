@@ -41,7 +41,7 @@ async def on_ready():
 
 @client.event
 async def on_member_join(member):
-    welcome_channel_id = YOUR_WELCOME_CHANNEL_ID
+    welcome_channel_id = 1191870848785715300
     channel = client.get_channel(welcome_channel_id)
 
     embed = discord.Embed(
