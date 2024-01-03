@@ -39,6 +39,19 @@ async def on_ready():
   client.tree.copy_global_to(guild=discord.Object(id=GUILDS_ID))
   await client.tree.sync(guild=discord.Object(id=GUILDS_ID))
 
+@client.event
+async def on_member_join(member):
+    welcome_channel_id = YOUR_WELCOME_CHANNEL_ID
+    channel = client.get_channel(welcome_channel_id)
+
+    embed = discord.Embed(
+        title=f"Welcome {member.mention}!",
+        description="Join our server using this invite link: https://discord.gg/u9Beh9gz",
+        color=int("FF2E98", 16)
+    )
+
+    await channel.send(embed=embed)
+
 @client.tree.command()
 @discord.app_commands.describe(template="Template you want to convert")
 async def convert(interaction: Interaction, template: discord.Attachment):
