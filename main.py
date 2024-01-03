@@ -45,8 +45,8 @@ async def on_member_join(member):
     channel = client.get_channel(welcome_channel_id)
 
     embed = discord.Embed(
-        title=f"Welcome {member.mention}!",
-        description="Join our server using this invite link: https://discord.gg/u9Beh9gz",
+        title=f"Welcome to PCollect Place!",
+        description="**We hope you enjoy your stay, {member.mention}!**\n\nInvite others using this link: https://discord.gg/u9Beh9gz",
         color=int("FF2E98", 16)
     )
 
@@ -127,7 +127,6 @@ async def embed(interaction: discord.Interaction, title: str, message: str, colo
     if image_url:
         embed.set_image(url=image_url)
 
-    # Check if message_id is provided
     if message_id:
         channel = interaction.channel
         try:
