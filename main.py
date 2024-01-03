@@ -49,7 +49,7 @@ async def on_member_join(member):
         description=f"**We hope you enjoy your stay, {member.mention}!**\n\nInvite others using this link: https://discord.gg/u9Beh9gz",
         color=int("FF2E98", 16)
     )
-
+    embed.set_thumbnail(url=member.avatar_url)
     await channel.send(embed=embed)
 
 @client.tree.command()
