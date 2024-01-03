@@ -109,7 +109,7 @@ async def purge(interaction: Interaction, amount: int):
     image_url="URL of the image to embed (optional)",
     message_id="ID of the message to edit (optional)")
 @discord.app_commands.default_permissions(administrator=True)
-async def embed(interaction: discord.Interaction, title: str, message: str, color: str, footer: str = None, image_url: str = None, message_id: int = None):
+async def embed(interaction: discord.Interaction, title: str, message: str, color: str, footer: str = None, image_url: str = None, message_id: str = None):
     """
     Create a custom embed or edit an existing one!
     """
