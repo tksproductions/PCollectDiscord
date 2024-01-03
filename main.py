@@ -87,16 +87,17 @@ async def purge(interaction: Interaction, amount: int):
     await channel.purge(limit=amount + 1) 
     await interaction.followup.send(f"Deleted {amount} messages.", ephemeral=True)
 
-@client.tree.command()
-@discord.app_commands.describe(title="Title of the embed", 
-                               message="Message inside the embed", 
-                               color="Hex color code for the embed",
-                               footer="Footer text for the embed (optional)",
-                               image_url="URL of the image to embed (optional)")
+@discord.app_commands.describe(
+    title="Title of the embed",
+    message="Message inside the embed",
+    color="Hex color code for the embed",
+    footer="Footer text for the embed (optional)",
+    image_url="URL of the image to embed (optional)",
+    message_id="ID of the message to edit (optional)")
 @discord.app_commands.default_permissions(administrator=True)
-async def embed(interaction: discord.Interaction, title: str, message: str, color: str, footer: str = None, image_url: str = None):
+async def embed(interaction: discord.Interaction, title: str, message: str, color: str, footer: str = None, image_url: str = None, message_id: int = None):
     """
-    Create a custom embed!
+    Create a custom embed or edit an existing one!
     """
     try:
         color = int(color.strip("#"), 16)
@@ -112,7 +113,22 @@ async def embed(interaction: discord.Interaction, title: str, message: str, colo
     if image_url:
         embed.set_image(url=image_url)
 
-    await interaction.response.send_message(embed=embed)
+    # Check if message_id is provided
+    if message_id:
+        channel = interaction.channel
+        try:
+            msg_to_edit = await channel.fetch_message(message_id)
+            await msg_to_edit.edit(embed=embed)
+            await interaction.response.send_message("Message edited successfully.", ephemeral=True)
+        except discord.NotFound:
+            await interaction.response.send_message("Message with the given ID not found.", ephemeral=True)
+        except discord.Forbidden:
+            await interaction.response.send_message("Bot doesn't have permissions to edit the message.", ephemeral=True)
+        except discord.HTTPException:
+            await interaction.response.send_message("Editing message failed.", ephemeral=True)
+    else:
+        await interaction.response.send_message(embed=embed)
+
 
 token = os.environ['TOKEN']
 client.run(token)
