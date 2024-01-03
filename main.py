@@ -87,6 +87,7 @@ async def purge(interaction: Interaction, amount: int):
     await channel.purge(limit=amount + 1) 
     await interaction.followup.send(f"Deleted {amount} messages.", ephemeral=True)
 
+@client.tree.command()
 @discord.app_commands.describe(
     title="Title of the embed",
     message="Message inside the embed",
