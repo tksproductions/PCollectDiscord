@@ -114,6 +114,7 @@ async def embed(interaction: discord.Interaction, title: str, message: str, colo
     """
     Create a custom embed or edit an existing one!
     """
+    await interaction.response.defer(ephemeral=True)
     try:
         color = int(color.strip("#"), 16)
     except ValueError:
@@ -144,7 +145,8 @@ async def embed(interaction: discord.Interaction, title: str, message: str, colo
         except discord.HTTPException:
             await interaction.response.send_message("Editing message failed.", ephemeral=True)
     else:
-        await interaction.response.send_message(embed=embed)
+        await interaction.channel.send(embed=embed)
+        await interaction.followup.send("Embed sent successfully.", ephemeral=True)
 
 
 token = os.environ['TOKEN']
