@@ -121,6 +121,7 @@ async def embed(interaction: discord.Interaction, title: str, message: str, colo
         await interaction.response.send_message("Invalid color code. Please use a hex color code.", ephemeral=True)
         return
 
+    message = message.replace("\\n", "\n")
     embed = discord.Embed(title=title, description=message, color=color)
 
     if footer:
