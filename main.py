@@ -158,8 +158,10 @@ class GiveawayView(ui.View):
         messages = await channel.history(limit=1).flatten()
         if messages:
             giveaway_message = messages[0]
+            async for message in channel.history(limit=1):
+                giveaway_message = message
+            break 
             content = giveaway_message.content
-
             user_id = str(interaction.user.id)
             if user_id not in content:
                 content += f"\n{user_id}: {entry_type}"
