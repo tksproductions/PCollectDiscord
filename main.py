@@ -149,6 +149,55 @@ async def embed(interaction: discord.Interaction, title: str, message: str, colo
         await interaction.channel.send(embed=embed)
         await interaction.followup.send("Embed sent successfully.", ephemeral=True)
 
+class GiveawayView(ui.View):
+    def __init__(self):
+        super().__init__()
+        self.add_item(ui.Button(label="Default Entry", style=discord.ButtonStyle.primary, custom_id="default_entry"))
+        self.add_item(ui.Button(label="Rate on App Store", style=discord.ButtonStyle.primary, custom_id="rate_app"))
+        self.add_item(ui.Button(label="Follow us on TikTok", style=discord.ButtonStyle.primary, custom_id="follow_tiktok"))
+
+    async def handle_entry(self, button: ui.Button, interaction: Interaction, entry_type: str):
+        channel = interaction.channel
+        messages = await channel.history(limit=1).flatten()
+        if messages:
+            giveaway_message = messages[0]
+            content = giveaway_message.content
+
+            user_id = str(interaction.user.id)
+            if user_id not in content:
+                content += f"\n{user_id}: {entry_type}"
+            else:
+                entries = content.split(user_id)[1].split("\n")[0].strip()
+                if entry_type in entries:
+                    entries = entries.replace(entry_type, '').strip()
+                else:
+                    entries += f" | {entry_type}"
+                content = content.replace(f"{user_id}: {entries.strip()}", '').strip() + f"\n{user_id}: {entries.strip()}"
+
+            await giveaway_message.edit(content=content)
+            await interaction.response.send_message(f"You have updated your entries to: {entries}", ephemeral=True)
+
+    @ui.button(label="Default Entry", style=discord.ButtonStyle.primary, custom_id="default_entry")
+    async def default_entry(self, button: ui.Button, interaction: Interaction):
+        await self.handle_entry(button, interaction, "Default")
+
+    @ui.button(label="Rate on App Store", style=discord.ButtonStyle.primary, custom_id="rate_app")
+    async def rate_app(self, button: ui.Button, interaction: Interaction):
+        await self.handle_entry(button, interaction, "Rate")
+
+    @ui.button(label="Follow us on TikTok", style=discord.ButtonStyle.primary, custom_id="follow_tiktok")
+    async def follow_tiktok(self, button: ui.Button, interaction: Interaction):
+        await self.handle_entry(button, interaction, "TikTok")
+
+@client.tree.command()
+@discord.app_commands.default_permissions(administrator=True)
+async def giveaway(interaction: discord.Interaction):
+    """
+    Starts a new giveaway.
+    """
+    view = GiveawayView()
+    embed = discord.Embed(title="Giveaway", description="Participate in the giveaway!")
+    await interaction.channel.send(embed=embed, view=view, content="Giveaway Participants:")
 
 token = os.environ['TOKEN']
 client.run(token)
