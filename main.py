@@ -175,15 +175,15 @@ class GiveawayView(ui.View):
             await interaction.response.send_message(f"You have updated your entries to: {entries}", ephemeral=True)
 
     @ui.button(label="Default Entry", style=discord.ButtonStyle.primary, custom_id="default_entry")
-    async def default_entry(self, button: ui.Button, interaction: Interaction):
+    async def default_entry(self, interaction: Interaction, button: ui.Button):
         await self.handle_entry(interaction, "Default")
     
     @ui.button(label="Rate on App Store", style=discord.ButtonStyle.primary, custom_id="rate_app")
-    async def rate_app(self, button: ui.Button, interaction: Interaction):
+    async def rate_app(self, interaction: Interaction, button: ui.Button):
         await self.handle_entry(interaction, "Rate")
     
     @ui.button(label="Follow us on TikTok", style=discord.ButtonStyle.primary, custom_id="follow_tiktok")
-    async def follow_tiktok(self, button: ui.Button, interaction: Interaction):
+    async def follow_tiktok(self, interaction: Interaction, button: ui.Button):
         await self.handle_entry(interaction, "TikTok")
 
 @client.tree.command()
