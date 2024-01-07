@@ -152,9 +152,6 @@ async def embed(interaction: discord.Interaction, title: str, message: str, colo
 class GiveawayView(ui.View):
     def __init__(self):
         super().__init__()
-        self.add_item(ui.Button(label="Default Entry", style=discord.ButtonStyle.primary, custom_id="default_entry"))
-        self.add_item(ui.Button(label="Rate on App Store", style=discord.ButtonStyle.primary, custom_id="rate_app"))
-        self.add_item(ui.Button(label="Follow us on TikTok", style=discord.ButtonStyle.primary, custom_id="follow_tiktok"))
 
     async def handle_entry(self, button: ui.Button, interaction: Interaction, entry_type: str):
         channel = interaction.channel
