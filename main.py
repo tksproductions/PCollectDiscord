@@ -180,7 +180,7 @@ async def handle_entry(self, interaction: Interaction, entry_type: str):
     embed.add_field(name="Participants", value=field_value.strip(), inline=False)
 
     await self.message.edit(embed=embed)
-    response_message = f"You have updated your entries to include: {entry_type}"
+    response_message = f"You have updated your entries to include: **{entry_type}**\nWinners' entries will be verified. Press again if this was a mistake."
     await interaction.response.send_message(response_message, ephemeral=True)
 
     @ui.button(label="ENTER (+1)", style=discord.ButtonStyle.success, custom_id="default_entry")
