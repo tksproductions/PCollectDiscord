@@ -1,6 +1,6 @@
 import discord
 from discord.ext import commands
-from discord import Interaction
+from discord import Interaction, app_commands, ui
 import requests
 import numpy as np
 import io
