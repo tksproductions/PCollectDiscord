@@ -153,7 +153,7 @@ class GiveawayView(ui.View):
     def __init__(self):
         super().__init__()
 
-    async def handle_entry(self, button: ui.Button, interaction: Interaction, entry_type: str):
+    async def handle_entry(self, interaction: Interaction, entry_type: str):
         channel = interaction.message.channel
         messages = await channel.history(limit=1).flatten()
         if messages:
