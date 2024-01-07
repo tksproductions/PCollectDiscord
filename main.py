@@ -154,7 +154,7 @@ class GiveawayView(ui.View):
         super().__init__()
 
     async def handle_entry(self, interaction: Interaction, entry_type: str):
-        channel = interaction.response.channel
+        channel = interaction.message.channel
         messages = await channel.history(limit=1).flatten()
         if messages:
             giveaway_message = messages[0]
