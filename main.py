@@ -193,8 +193,8 @@ async def giveaway(interaction: discord.Interaction):
     Starts a new giveaway.
     """
     view = GiveawayView()
-    embed = discord.Embed(title="Giveaway", description="Participate in the giveaway!")
-    await interaction.channel.send(embed=embed, view=view, content="Giveaway Participants:")
+    embed = discord.Embed(title="Giveaway", description="Participate in the giveaway!", color=int("FF2E98", 16))
+    await interaction.channel.send(embed=embed, view=view)
 
 token = os.environ['TOKEN']
 client.run(token)
