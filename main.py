@@ -201,14 +201,14 @@ async def handle_entry(self, interaction: Interaction, entry_type: str):
 
 @client.tree.command()
 @discord.app_commands.default_permissions(administrator=True)
-async def start_giveaway(interaction: discord.Interaction):
+async def giveaway(interaction: discord.Interaction):
     """
     Starts a new giveaway.
     """
     embed = discord.Embed(title="ENTER THE GIVEAWAY", description="Participate in the giveaway!", color=int("FF2E98", 16))
     embed.add_field(name="Participants", value="", inline=False)
 
-    giveaway_message = await interaction.channel.send(embed=embed)
+    giveaway_message = await interaction.channel.send(embed=embed, view=view)
     view = GiveawayView(giveaway_message)
     await giveaway_message.edit(view=view)
 
