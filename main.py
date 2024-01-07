@@ -178,16 +178,16 @@ class GiveawayView(ui.View):
             response_message += f"\n{message_link}"
         await interaction.response.send_message(response_message, ephemeral=True)
 
-    @ui.button(label="Default Entry", style=discord.ButtonStyle.primary, custom_id="default_entry")
+    @ui.button(label="Default Entry", style=discord.ButtonStyle.success, custom_id="default_entry")
     async def default_entry(self, interaction: Interaction, button: ui.Button):
         await self.handle_entry(interaction, "Default")
 
-    @ui.button(label="Rate on App Store", style=discord.ButtonStyle.secondary, custom_id="rate_app")
+    @ui.button(label="Rate on App Store", style=discord.ButtonStyle.primary, custom_id="rate_app")
     async def rate_app(self, interaction: Interaction, button: ui.Button):
         app_store_link = "https://apps.apple.com/us/app/pcollect-k-pop-photocards/id6448884412"
         await self.handle_entry(interaction, "Rate", app_store_link)
 
-    @ui.button(label="Follow us on TikTok", style=discord.ButtonStyle.secondary, custom_id="follow_tiktok")
+    @ui.button(label="Follow us on TikTok", style=discord.ButtonStyle.primary, custom_id="follow_tiktok")
     async def follow_tiktok(self, interaction: Interaction, button: ui.Button):
         tiktok_link = "https://www.tiktok.com/@pcollectapp?lang=en"
         await self.handle_entry(interaction, "TikTok", tiktok_link)
