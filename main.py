@@ -176,15 +176,15 @@ class GiveawayView(ui.View):
 
     @ui.button(label="Default Entry", style=discord.ButtonStyle.primary, custom_id="default_entry")
     async def default_entry(self, button: ui.Button, interaction: Interaction):
-        await self.handle_entry(button, interaction, "Default")
-
+        await self.handle_entry(interaction, "Default")
+    
     @ui.button(label="Rate on App Store", style=discord.ButtonStyle.primary, custom_id="rate_app")
     async def rate_app(self, button: ui.Button, interaction: Interaction):
-        await self.handle_entry(button, interaction, "Rate")
-
+        await self.handle_entry(interaction, "Rate")
+    
     @ui.button(label="Follow us on TikTok", style=discord.ButtonStyle.primary, custom_id="follow_tiktok")
     async def follow_tiktok(self, button: ui.Button, interaction: Interaction):
-        await self.handle_entry(button, interaction, "TikTok")
+        await self.handle_entry(interaction, "TikTok")
 
 @client.tree.command()
 @discord.app_commands.default_permissions(administrator=True)
