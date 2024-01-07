@@ -154,33 +154,34 @@ class GiveawayView(ui.View):
         super().__init__()
         self.message = message
 
-    async def handle_entry(self, interaction: Interaction, entry_type: str):
-        guild = interaction.guild
-        member = guild.get_member(interaction.user.id)
+async def handle_entry(self, interaction: Interaction, entry_type: str):
+    guild = interaction.guild
+    member = guild.get_member(interaction.user.id)
 
-        discord_username = member.display_name
-        instagram_username = member.nick if member.nick else member.name
+    discord_username = member.display_name
+    instagram_username = member.nick if member.nick else member.name
 
-        embed = self.message.embeds[0]
-        field_value = embed.fields[0].value if embed.fields else ""
-        entry_line = f"{discord_username} ({instagram_username}): {entry_type}"
+    embed = self.message.embeds[0]
+    field_value = embed.fields[0].value if embed.fields else ""
+    user_entry_line = f"{discord_username} ({instagram_username}):"
 
-        if discord_username in field_value:
-            lines = field_value.split('\n')
-            lines = [line for line in lines if discord_username not in line]
-            field_value = '\n'.join(lines)
+    if user_entry_line in field_value:
+        lines = field_value.split('\n')
+        for i, line in enumerate(lines):
+            if user_entry_line in line:
+                if entry_type not in line:
+                    lines[i] += f" {entry_type}"
+                break
+        field_value = '\n'.join(lines)
+    else:
+        field_value += f"\n{user_entry_line} {entry_type}"
 
-            if entry_type not in field_value:
-                field_value += f"\n{entry_line}"
-        else:
-            field_value += f"\n{entry_line}"
+    embed.clear_fields()
+    embed.add_field(name="Participants", value=field_value.strip(), inline=False)
 
-        embed.clear_fields()
-        embed.add_field(name="Participants", value=field_value.strip(), inline=False)
-
-        await self.message.edit(embed=embed)
-        response_message = f"You have updated your entries to: {entry_type}"
-        await interaction.response.send_message(response_message, ephemeral=True)
+    await self.message.edit(embed=embed)
+    response_message = f"You have updated your entries to include: {entry_type}"
+    await interaction.response.send_message(response_message, ephemeral=True)
 
     @ui.button(label="ENTER (+1)", style=discord.ButtonStyle.success, custom_id="default_entry")
     async def default_entry(self, interaction: Interaction, button: ui.Button):
