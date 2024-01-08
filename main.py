@@ -184,7 +184,7 @@ class GiveawayView(ui.View):
     
         field_value = '\n'.join(lines).strip()
         embed.clear_fields()
-        embed.add_field(name="__Participants_", value=field_value if field_value else "No participants yet.", inline=False)
+        embed.add_field(name="__Participants__", value=field_value if field_value else "No participants yet.", inline=False)
     
         await self.message.edit(embed=embed)
         await interaction.response.send_message(response_message, ephemeral=True)
