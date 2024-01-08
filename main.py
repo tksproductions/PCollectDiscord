@@ -48,9 +48,7 @@ async def on_interaction(interaction: discord.Interaction):
             message = await channel.fetch_message(GIVEAWAY_MESSAGE_ID)
             view = GiveawayView(message)
             await message.edit(view=view)
-
-            if isinstance(interaction.component, discord.ui.Button):
-                await view.handle_entry(interaction)
+            await view.handle_entry(interaction)
 
 @client.event
 async def on_member_join(member):
