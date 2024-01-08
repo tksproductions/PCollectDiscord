@@ -45,15 +45,12 @@ async def on_interaction(interaction: discord.Interaction):
     if interaction.type == discord.InteractionType.component and interaction.message.id == GIVEAWAY_MESSAGE_ID:
         channel = client.get_channel(interaction.channel_id)
         if channel:
-            try:
-                message = await channel.fetch_message(GIVEAWAY_MESSAGE_ID)
-                view = GiveawayView(message)
-                await message.edit(view=view)
+            message = await channel.fetch_message(GIVEAWAY_MESSAGE_ID)
+            view = GiveawayView(message)
+            await message.edit(view=view)
 
-                if isinstance(interaction.component, discord.ui.Button):
-                    await view.handle_entry(interaction)
-            except:
-                print("Failed")
+            if isinstance(interaction.component, discord.ui.Button):
+                await view.handle_entry(interaction)
 
 @client.event
 async def on_member_join(member):
