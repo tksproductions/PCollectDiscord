@@ -41,7 +41,7 @@ async def on_ready():
   await client.tree.sync(guild=discord.Object(id=GUILDS_ID))
 
 @client.event
-async def on_interaction():
+async def on_interaction(interaction: discord.Interaction):
       if GIVEAWAY_MESSAGE_ID:
         channel_id = 1191860454495109360
         channel = client.get_channel(channel_id)
