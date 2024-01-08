@@ -171,12 +171,14 @@ class GiveawayView(ui.View):
         if user_line_index is not None:
             line_parts = lines[user_line_index].split(":")
             current_entries = line_parts[1].strip() if len(line_parts) > 1 else ""
-            if entry_type in current_entries:
+            if entry_type != "ENTER" and entry_type in current_entries:
                 current_entries = current_entries.replace(entry_type, '').strip()
                 response_message = f"Your **{entry_type}** entry has been removed."
-            else:
+            elif entry_type not in current_entries:
                 current_entries += f" {entry_type}"
                 response_message = f"Your entries now include: **{entry_type}**"
+            else:
+                response_message = f"Your Instagram username has been updated to **@{instagram_username}**."
             lines[user_line_index] = f"**@{instagram_username}** {user_identifier}: {current_entries}"
         else:
             lines.append(f"**@{instagram_username}** {user_identifier}: {entry_type}")
@@ -188,22 +190,22 @@ class GiveawayView(ui.View):
     
         await self.message.edit(embed=embed)
         await interaction.response.send_message(response_message, ephemeral=True)
-    
-    @ui.button(label="ENTER (+1)", style=discord.ButtonStyle.success, custom_id="default_entry")
-    async def default_entry(self, interaction: Interaction, button: ui.Button):
-        await self.handle_entry(interaction, "ENTER")
-    
-    @ui.button(label="RATING (+1)", style=discord.ButtonStyle.primary, custom_id="rate_app")
-    async def rate_app(self, interaction: Interaction, button: ui.Button):
-        app_store_link = "https://apps.apple.com/us/app/pcollect-k-pop-photocards/id6448884412"
-        await self.handle_entry(interaction, "RATING")
-        await interaction.followup.send(app_store_link, ephemeral=True)
-    
-    @ui.button(label="TIKTOK (+1)", style=discord.ButtonStyle.primary, custom_id="follow_tiktok")
-    async def follow_tiktok(self, interaction: Interaction, button: ui.Button):
-        tiktok_link = "https://www.tiktok.com/@pcollectapp?lang=en"
-        await self.handle_entry(interaction, "TIKTOK")
-        await interaction.followup.send(tiktok_link, ephemeral=True)
+        
+        @ui.button(label="ENTER (+1)", style=discord.ButtonStyle.success, custom_id="default_entry")
+        async def default_entry(self, interaction: Interaction, button: ui.Button):
+            await self.handle_entry(interaction, "ENTER")
+        
+        @ui.button(label="RATING (+1)", style=discord.ButtonStyle.primary, custom_id="rate_app")
+        async def rate_app(self, interaction: Interaction, button: ui.Button):
+            app_store_link = "https://apps.apple.com/us/app/pcollect-k-pop-photocards/id6448884412"
+            await self.handle_entry(interaction, "RATING")
+            await interaction.followup.send(app_store_link, ephemeral=True)
+        
+        @ui.button(label="TIKTOK (+1)", style=discord.ButtonStyle.primary, custom_id="follow_tiktok")
+        async def follow_tiktok(self, interaction: Interaction, button: ui.Button):
+            tiktok_link = "https://www.tiktok.com/@pcollectapp?lang=en"
+            await self.handle_entry(interaction, "TIKTOK")
+            await interaction.followup.send(tiktok_link, ephemeral=True)
 
 @client.tree.command()
 @discord.app_commands.default_permissions(administrator=True)
