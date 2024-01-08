@@ -171,7 +171,7 @@ class GiveawayView(ui.View):
                 if user_entry_line in line:
                     if entry_type in line:
                         lines[i] = line.replace(entry_type, '').strip()
-                        response_message = f"Your **{entry_type}** entry has been removed.\nPress the button again to add it back."
+                        response_message = f"Your **{entry_type}** entry has been removed.\nPress the button again to remove it."
                     else:
                         lines[i] += f" {entry_type}"
                         response_message = f"Your entries now include: **{entry_type}**"
