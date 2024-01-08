@@ -173,7 +173,7 @@ class GiveawayView(ui.View):
         lines = field_value.split('\n') if field_value else []
         user_line_index = next((i for i, line in enumerate(lines) if user_identifier in line), None)
 
-        if entry_type in ["rate_app", "follow_tiktok", "tag_three"] and not any(user_identifier in line for line in lines):
+        if entry_type in ["RATING", "TIKTOK", "TAG3"] and not any(user_identifier in line for line in lines):
             await interaction.response.send_message("You need to enter the giveaway first (ENTER) before performing this action.", ephemeral=True)
             return
     
