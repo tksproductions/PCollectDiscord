@@ -181,11 +181,11 @@ class GiveawayView(ui.View):
             field_value += f"\n{user_entry_line} {entry_type}"
             response_message = f"Your entries now include: **{entry_type}**"
 
-    embed.clear_fields()
-    embed.add_field(name="Participants", value=field_value if field_value else "No participants yet.", inline=False)
-
-    await self.message.edit(embed=embed)
-    await interaction.response.send_message(response_message, ephemeral=True)
+        embed.clear_fields()
+        embed.add_field(name="Participants", value=field_value if field_value else "No participants yet.", inline=False)
+    
+        await self.message.edit(embed=embed)
+        await interaction.response.send_message(response_message, ephemeral=True)
     
     @ui.button(label="ENTER (+1)", style=discord.ButtonStyle.success, custom_id="default_entry")
     async def default_entry(self, interaction: Interaction, button: ui.Button):
