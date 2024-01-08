@@ -160,7 +160,7 @@ class GiveawayView(ui.View):
         self.message = message
 
     async def handle_entry(self, interaction: Interaction, entry_type: str):
-        conversion = {"E":"ENTER", "R":"RATING", "T":"TIKTOK", "3": "TAG3"}
+        conversion = {"E":"ENTER", "R":"RATING", "T":"TIKTOK", "3": "TAG 3"}
         guild = interaction.guild
         member = guild.get_member(interaction.user.id)
 
