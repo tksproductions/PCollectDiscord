@@ -173,10 +173,6 @@ class GiveawayView(ui.View):
 
         lines = field_value.split('\n') if field_value else []
         user_line_index = next((i for i, line in enumerate(lines) if user_identifier in line), None)
-
-        if entry_type in ["R", "T", "3"] and not any(user_identifier in line for line in lines):
-            await interaction.response.send_message("You need to enter the giveaway first (ENTER) before performing this action.", ephemeral=True)
-            return
     
         if user_line_index is not None:
             line_parts = lines[user_line_index].split(":")
@@ -191,8 +187,12 @@ class GiveawayView(ui.View):
                 response_message = f"Your Instagram username has been updated to **@{instagram_username}**."
             lines[user_line_index] = f"**@{instagram_username}** {user_identifier}: {current_entries}"
         else:
-            lines.append(f"**@{instagram_username}** {user_identifier}: {entry_type}")
-            response_message = f"Thank you for entering the giveaway! You may now complete bonus entries."
+            if entry_type != "ENTER":
+                await interaction.response.send_message("You need to enter the giveaway first (ENTER) before performing this action.", ephemeral=True)
+                return
+            else:
+                lines.append(f"**@{instagram_username}** {user_identifier}: {entry_type}")
+                response_message = f"Thank you for entering the giveaway! You may now complete bonus entries."
     
         field_value = '\n'.join(lines).strip()
         embed.clear_fields()
