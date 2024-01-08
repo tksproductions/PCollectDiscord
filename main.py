@@ -45,16 +45,6 @@ async def on_ready():
   await message.edit(view=view)
 
 @client.event
-async def on_interaction(interaction: discord.Interaction):
-    if interaction.type == discord.InteractionType.component and interaction.message.id == GIVEAWAY_MESSAGE_ID:
-        channel = client.get_channel(interaction.channel_id)
-        if channel:
-            message = await channel.fetch_message(GIVEAWAY_MESSAGE_ID)
-            view = GiveawayView(message)
-            await message.edit(view=view)
-            await view.handle_button_interaction(interaction)
-
-@client.event
 async def on_member_join(member):
     welcome_channel_id = 1191870848785715300
     channel = client.get_channel(welcome_channel_id)
@@ -168,29 +158,24 @@ class GiveawayView(ui.View):
     def __init__(self, message):
         super().__init__(timeout=None)
         self.message = message
-        
-    async def handle_button_interaction(self, interaction: discord.Interaction):
-        button_id = interaction.data.custom_id
-        if button_id == "default_entry":
-            await self.default_entry(interaction)
-        elif button_id == "rate_app":
-            await self.rate_app(interaction)
-        elif button_id == "follow_tiktok":
-            await self.follow_tiktok(interaction)
-            
+
     async def handle_entry(self, interaction: Interaction, entry_type: str):
         guild = interaction.guild
         member = guild.get_member(interaction.user.id)
-    
-        discord_username = member.name  
-        instagram_username = member.nick if member.nick else member.display_name 
-    
+
+        discord_username = member.name
+        instagram_username = member.nick if member.nick else member.display_name
+
         embed = self.message.embeds[0]
         field_value = embed.fields[0].value if embed.fields else ""
-        user_identifier = f"({discord_username})"  
-    
+        user_identifier = f"({discord_username})"
+
         lines = field_value.split('\n') if field_value else []
         user_line_index = next((i for i, line in enumerate(lines) if user_identifier in line), None)
+
+        if entry_type in ["rate_app", "follow_tiktok", "tag_three"] and not any(user_identifier in line for line in lines):
+            await interaction.response.send_message("You need to enter the giveaway first (ENTER) before performing this action.", ephemeral=True)
+            return
     
         if user_line_index is not None:
             line_parts = lines[user_line_index].split(":")
@@ -214,6 +199,10 @@ class GiveawayView(ui.View):
     
         await self.message.edit(embed=embed)
         await interaction.response.send_message(response_message, ephemeral=True)
+
+    @ui.button(label="TAG 3 (+1)", style=discord.ButtonStyle.secondary, custom_id="tag_three")
+    async def tag_three(self, interaction: Interaction, button: ui.Button):
+        await self.handle_entry(interaction, "TAG3")
         
     @ui.button(label="ENTER (+1)", style=discord.ButtonStyle.success, custom_id="default_entry")
     async def default_entry(self, interaction: Interaction, button: ui.Button):
