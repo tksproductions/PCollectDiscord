@@ -32,7 +32,7 @@ def extract_photos(input_image, aspect_ratio=(5.5, 8.5), min_percentage=0.5):
 
 ## CLIENT ##
 client = commands.Bot(command_prefix=".", intents = discord.Intents.all(), activity=discord.Activity(type=discord.ActivityType.listening, name="Ditto"))
-GIVEAWAY_MESSAGE_ID = 1193775218230054932 
+GIVEAWAY_MESSAGE_ID = 1194025455641174079 
 
 @client.event
 async def on_ready():
@@ -200,10 +200,6 @@ class GiveawayView(ui.View):
         await self.message.edit(embed=embed)
         await interaction.response.send_message(response_message, ephemeral=True)
 
-    @ui.button(label="TAG 3 (+1)", style=discord.ButtonStyle.secondary, custom_id="tag_three")
-    async def tag_three(self, interaction: Interaction, button: ui.Button):
-        await self.handle_entry(interaction, "TAG3")
-        
     @ui.button(label="ENTER (+1)", style=discord.ButtonStyle.success, custom_id="default_entry")
     async def default_entry(self, interaction: Interaction, button: ui.Button):
         await self.handle_entry(interaction, "ENTER")
@@ -216,13 +212,17 @@ class GiveawayView(ui.View):
     async def follow_tiktok(self, interaction: Interaction, button: ui.Button):
         await self.handle_entry(interaction, "TIKTOK")
 
+    @ui.button(label="TAG 3 (+1)", style=discord.ButtonStyle.primary, custom_id="tag_three")
+    async def tag_three(self, interaction: Interaction, button: ui.Button):
+        await self.handle_entry(interaction, "TAG3")
+
 @client.tree.command()
 @discord.app_commands.default_permissions(administrator=True)
 async def giveaway(interaction: discord.Interaction):
     """
     Starts a new giveaway.
     """
-    embed = discord.Embed(title="PCollect x 4gyuseo Giveaway", description="**__Prizes__**\n**3 Winners**\nInternational, Free Shipping\n\n**__To Enter__**\n- Follow [@4gyuseo](https://www.instagram.com/4gyuseo?igsh=MjBia3BiaXo2b25m&utm_source=qr) and [@pcollectapp](https://www.instagram.com/pcollectapp?igsh=MWFsc2toMmRxZHo3YQ%3D%3D&utm_source=qr) on Instagram\n- Like the [giveaway post](https://www.instagram.com/4gyuseo?igsh=MjBia3BiaXo2b25m&utm_source=qr) and share to story\n- Tag 3 friends in the comments\n- **MAKE YOUR SERVER NICKNAME YOUR INSTAGRAM USERNAME**\n- **CLICK THE GREEN ENTER BUTTON BELOW**\nIf you forget to change your nickname, click ENTER again and it will update your entry.\n\n**__Bonus Entries__**\n- [Rate PCollect](https://apps.apple.com/us/app/pcollect-k-pop-photocards/id6448884412) on the App Store (+1)\n- [Follow PCollect](https://www.tiktok.com/@pcollectapp?_t=8ir1lIoNe8p&_r=1) on TikTok (+1)\n- **CLICK THE BUTTONS BELOW WHEN YOU ARE DONE**\nWe will verify winners' entries. If you accidentally click a button, click again to undo.", color=int("FF2E98", 16))
+    embed = discord.Embed(title="PCollect x 4gyuseo Giveaway", description="**__Prizes__**\n**3 Winners**\nInternational, Free Shipping\n\n**__To Enter__**\n- Follow [@4gyuseo](https://www.instagram.com/4gyuseo?igsh=MjBia3BiaXo2b25m&utm_source=qr) and [@pcollectapp](https://www.instagram.com/pcollectapp?igsh=MWFsc2toMmRxZHo3YQ%3D%3D&utm_source=qr) on Instagram\n- Like the [giveaway post](https://www.instagram.com/4gyuseo?igsh=MjBia3BiaXo2b25m&utm_source=qr) and share to story\n- Tag 3 friends in the comments\n- **MAKE YOUR SERVER NICKNAME YOUR INSTAGRAM USERNAME**\n- **CLICK THE GREEN ENTER BUTTON BELOW**\nIf you forget to change your nickname, click ENTER again and it will update your entry.\n\n**__Bonus Entries__**\n- [Rate PCollect](https://apps.apple.com/us/app/pcollect-k-pop-photocards/id6448884412) on the App Store (+1)\n- [Follow PCollect](https://www.tiktok.com/@pcollectapp?_t=8ir1lIoNe8p&_r=1) on TikTok (+1)\nTag 3 MORE friends in the comments (+1)\n- **CLICK THE BUTTONS BELOW WHEN YOU ARE DONE**\nWe will verify winners' entries. If you accidentally click a button, click again to undo.", color=int("FF2E98", 16))
     embed.add_field(name="__Participants__", value="", inline=False)
     giveaway_message = await interaction.channel.send(embed=embed)
     view = GiveawayView(giveaway_message)
