@@ -224,7 +224,7 @@ async def giveaway(interaction: discord.Interaction):
     Starts a new giveaway.
     """
     embed = discord.Embed(title="PCollect x 4gyuseo Giveaway", description="**__3 Winners__**\n**G-IDLE 2nd Full Album [2]** (International Free Shipping)\n**OR $30 PayPal F&F**\n\n**__To Enter__**\n- Follow [@4gyuseo](https://www.instagram.com/4gyuseo?igsh=MjBia3BiaXo2b25m&utm_source=qr) and [@pcollectapp](https://www.instagram.com/pcollectapp?igsh=MWFsc2toMmRxZHo3YQ%3D%3D&utm_source=qr) on Instagram\n- Like the [giveaway post](https://www.instagram.com/4gyuseo?igsh=MjBia3BiaXo2b25m&utm_source=qr) and share to story\n- Tag 3 friends in the comments\n- **MAKE YOUR SERVER NICKNAME YOUR INSTAGRAM USERNAME**\n- **CLICK THE GREEN ENTER BUTTON BELOW**\nIf you forget to change your nickname, click ENTER again and it will update your entry.\n\n**__Bonus Entries__**\n- [Rate PCollect](https://apps.apple.com/us/app/pcollect-k-pop-photocards/id6448884412) on the App Store (+1)\n- [Follow PCollect](https://www.tiktok.com/@pcollectapp?_t=8ir1lIoNe8p&_r=1) on TikTok (+1)\n- Tag 3 MORE friends in the comments (+1)\n- **CLICK THE BUTTONS BELOW WHEN YOU ARE DONE**\nWe will verify winners' entries. If you accidentally click a button, click again to undo.", color=int("FF2E98", 16))
-    embed.add_field(name="__Participants__", value="", inline=False)
+    embed.add_field(name="__ENTRIES__", value="", inline=False)
     giveaway_message = await interaction.channel.send(embed=embed)
     view = GiveawayView(giveaway_message)
     await giveaway_message.edit(view=view)
