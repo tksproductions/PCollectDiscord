@@ -158,19 +158,17 @@ class GiveawayView(ui.View):
         guild = interaction.guild
         member = guild.get_member(interaction.user.id)
     
-        discord_username = member.name  # Discord username (unchanging identifier)
-        instagram_username = member.nick if member.nick else member.display_name  # Instagram username (changeable)
+        discord_username = member.name  
+        instagram_username = member.nick if member.nick else member.display_name 
     
         embed = self.message.embeds[0]
         field_value = embed.fields[0].value if embed.fields else ""
-        user_identifier = f"({discord_username})"  # User identification based on Discord username
+        user_identifier = f"({discord_username})"  
     
-        # Search for the user's entry line based on Discord username
         lines = field_value.split('\n') if field_value else []
         user_line_index = next((i for i, line in enumerate(lines) if user_identifier in line), None)
     
         if user_line_index is not None:
-            # Update the Instagram username and entry types
             line_parts = lines[user_line_index].split(":")
             current_entries = line_parts[1].strip() if len(line_parts) > 1 else ""
             if entry_type in current_entries:
@@ -181,7 +179,6 @@ class GiveawayView(ui.View):
                 response_message = f"Your entries now include: **{entry_type}**"
             lines[user_line_index] = f"{instagram_username} {user_identifier}: {current_entries}"
         else:
-            # Add new entry line for the user
             lines.append(f"{instagram_username} {user_identifier}: {entry_type}")
             response_message = f"Your entries now include: **{entry_type}**"
     
