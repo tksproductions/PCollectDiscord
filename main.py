@@ -184,7 +184,7 @@ class GiveawayView(ui.View):
     
         field_value = '\n'.join(lines).strip()
         embed.clear_fields()
-        embed.add_field(name="Participants", value=field_value if field_value else "No participants yet.", inline=False)
+        embed.add_field(name="__Participants_", value=field_value if field_value else "No participants yet.", inline=False)
     
         await self.message.edit(embed=embed)
         await interaction.response.send_message(response_message, ephemeral=True)
@@ -211,8 +211,8 @@ async def giveaway(interaction: discord.Interaction):
     """
     Starts a new giveaway.
     """
-    embed = discord.Embed(title="ENTER THE GIVEAWAY", description="***BEFORE ENTERING, YOU MUST MAKE YOUR SERVER NICKNAME YOUR INSTAGRAM USERNAME!***", color=int("FF2E98", 16))
-    embed.add_field(name="Participants", value="", inline=False)
+    embed = discord.Embed(title="ENTER THE GIVEAWAY", description="**__Rules__**\n***BEFORE ENTERING, YOU MUST MAKE YOUR SERVER NICKNAME YOUR INSTAGRAM USERNAME!***", color=int("FF2E98", 16))
+    embed.add_field(name="__Participants__", value="", inline=False)
     giveaway_message = await interaction.channel.send(embed=embed)
     view = GiveawayView(giveaway_message)
     await giveaway_message.edit(view=view)
