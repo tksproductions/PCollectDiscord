@@ -221,15 +221,11 @@ class GiveawayView(ui.View):
         
     @ui.button(label="RATING (+1)", style=discord.ButtonStyle.primary, custom_id="rate_app")
     async def rate_app(self, interaction: Interaction, button: ui.Button):
-        app_store_link = "https://apps.apple.com/us/app/pcollect-k-pop-photocards/id6448884412"
         await self.handle_entry(interaction, "RATING")
-        await interaction.followup.send(app_store_link, ephemeral=True)
         
     @ui.button(label="TIKTOK (+1)", style=discord.ButtonStyle.primary, custom_id="follow_tiktok")
     async def follow_tiktok(self, interaction: Interaction, button: ui.Button):
-        tiktok_link = "https://www.tiktok.com/@pcollectapp?lang=en"
         await self.handle_entry(interaction, "TIKTOK")
-        await interaction.followup.send(tiktok_link, ephemeral=True)
 
 @client.tree.command()
 @discord.app_commands.default_permissions(administrator=True)
@@ -237,7 +233,7 @@ async def giveaway(interaction: discord.Interaction):
     """
     Starts a new giveaway.
     """
-    embed = discord.Embed(title="PCollect x 4gyuseo Giveaway", description="**__Rewards__**\n**3 Winners**\nInternational, Free Shipping\n\n**__Information__**\n**- BEFORE ENTERING, YOU MUST MAKE YOUR SERVER NICKNAME YOUR INSTAGRAM USERNAME!**", color=int("FF2E98", 16))
+    embed = discord.Embed(title="PCollect x 4gyuseo Giveaway", description="**__Rewards__**\n**3 Winners**\nInternational, Free Shipping\n\n**__To Enter__**\n- Follow [@4gyuseo](https://www.instagram.com/4gyuseo?igsh=MjBia3BiaXo2b25m&utm_source=qr) and [@pcollectapp](https://www.instagram.com/pcollectapp?igsh=MWFsc2toMmRxZHo3YQ%3D%3D&utm_source=qr) on Instagram\n- Like the [giveaway post](https://www.instagram.com/4gyuseo?igsh=MjBia3BiaXo2b25m&utm_source=qr) and share to story\n- Tag 3 friends in the comments\n- **MAKE YOUR SERVER NICKNAME YOUR INSTAGRAM USERNAME**\n- **CLICK THE GREEN ENTER BUTTON BELOW**\nIf you forgot to change your nickname, press ENTER again and it will update your entry.\n\n**__Bonus Entries__**\n- [Rate PCollect](https://apps.apple.com/us/app/pcollect-k-pop-photocards/id6448884412) on the App Store (+1)\n- [Follow us](https://www.tiktok.com/@pcollectapp?_t=8ir1lIoNe8p&_r=1) on TikTok (+1)\n- **CLICK THE BUTTONS WHEN YOU ARE DONE**\nIf you accidentally clicked one, click again to undo.", color=int("FF2E98", 16))
     embed.add_field(name="__Participants__", value="", inline=False)
     giveaway_message = await interaction.channel.send(embed=embed)
     view = GiveawayView(giveaway_message)
