@@ -224,7 +224,7 @@ async def giveaway(interaction: discord.Interaction):
     """
     Starts a new giveaway.
     """
-    embed = discord.Embed(title="PCollect x 4gyuseo Giveaway", description="**__Rewards__**\n3 Winners - Test Album\nInternational, Free Shipping\n\n**__Information__**\n**- BEFORE ENTERING, YOU MUST MAKE YOUR SERVER NICKNAME YOUR INSTAGRAM USERNAME!**", color=int("FF2E98", 16))
+    embed = discord.Embed(title="PCollect x 4gyuseo Giveaway", description="**__Rewards__**\n**3 Winners**\nInternational, Free Shipping\n\n**__Information__**\n**- BEFORE ENTERING, YOU MUST MAKE YOUR SERVER NICKNAME YOUR INSTAGRAM USERNAME!**", color=int("FF2E98", 16))
     embed.add_field(name="__Participants__", value="", inline=False)
     giveaway_message = await interaction.channel.send(embed=embed)
     view = GiveawayView(giveaway_message)
