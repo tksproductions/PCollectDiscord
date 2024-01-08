@@ -204,6 +204,10 @@ class GiveawayView(ui.View):
     @ui.button(label="ENTER (+1)", style=discord.ButtonStyle.success, custom_id="default_entry")
     async def default_entry(self, interaction: Interaction, button: ui.Button):
         await self.handle_entry(interaction, "E")
+
+    @ui.button(label="TAG 3 (+1)", style=discord.ButtonStyle.primary, custom_id="tag_three")
+    async def tag_three(self, interaction: Interaction, button: ui.Button):
+        await self.handle_entry(interaction, "3")
         
     @ui.button(label="RATING (+1)", style=discord.ButtonStyle.primary, custom_id="rate_app")
     async def rate_app(self, interaction: Interaction, button: ui.Button):
@@ -213,17 +217,13 @@ class GiveawayView(ui.View):
     async def follow_tiktok(self, interaction: Interaction, button: ui.Button):
         await self.handle_entry(interaction, "T")
 
-    @ui.button(label="TAG 3 (+1)", style=discord.ButtonStyle.primary, custom_id="tag_three")
-    async def tag_three(self, interaction: Interaction, button: ui.Button):
-        await self.handle_entry(interaction, "3")
-
 @client.tree.command()
 @discord.app_commands.default_permissions(administrator=True)
 async def giveaway(interaction: discord.Interaction):
     """
     Starts a new giveaway.
     """
-    embed = discord.Embed(title="ALBUM GIVEAWAY (PCOLLECT x 4GYUSEO)", description="**__3 Winners__**\n**G-IDLE 2nd Full Album [2] ***Version of your choice!*\nInternational Free Shipping\n\n**__To Enter__**\n- Follow [@4gyuseo](https://www.instagram.com/4gyuseo?igsh=MjBia3BiaXo2b25m&utm_source=qr) and [@pcollectapp](https://www.instagram.com/pcollectapp?igsh=MWFsc2toMmRxZHo3YQ%3D%3D&utm_source=qr) on Instagram\n- Like the [giveaway post](https://www.instagram.com/4gyuseo?igsh=MjBia3BiaXo2b25m&utm_source=qr) and share to story\n- Tag 3 friends in the comments\n- **MAKE YOUR SERVER NICKNAME YOUR INSTAGRAM USERNAME**\n- **CLICK THE GREEN ENTER BUTTON BELOW**\nIf you forget to change your nickname, click ENTER again and it will update your entry.\n\n**__Bonus Entries__**\n- [Rate PCollect](https://apps.apple.com/us/app/pcollect-k-pop-photocards/id6448884412) on the App Store (+1)\n- [Follow PCollect](https://www.tiktok.com/@pcollectapp?_t=8ir1lIoNe8p&_r=1) on TikTok (+1)\n- Tag 3 MORE friends in the comments (+1)\n- **CLICK THE BUTTONS BELOW WHEN YOU ARE DONE**\nWe will verify winners' entries. If you accidentally click a button, click again to undo.", color=int("FF2E98", 16))
+    embed = discord.Embed(title="ALBUM GIVEAWAY (PCOLLECT x 4GYUSEO)", description="**__3 Winners__**\n**G-IDLE 2nd Full Album [2] ***Version of your choice!*\nInternational Free Shipping\n\n**__To Enter__**\n- Follow [@4gyuseo](https://www.instagram.com/4gyuseo?igsh=MjBia3BiaXo2b25m&utm_source=qr) and [@pcollectapp](https://www.instagram.com/pcollectapp?igsh=MWFsc2toMmRxZHo3YQ%3D%3D&utm_source=qr) on Instagram\n- Like the [giveaway post](https://www.instagram.com/4gyuseo?igsh=MjBia3BiaXo2b25m&utm_source=qr) and share to story\n- Tag 3 friends in the comments\n- **MAKE YOUR SERVER NICKNAME YOUR INSTAGRAM USERNAME**\n- **CLICK THE GREEN ENTER BUTTON BELOW**\nIf you forget to change your nickname, click ENTER again and it will update your entry.\n\n**__Bonus Entries__**\n- Tag 3 MORE friends in the comments (+1)\n- [Rate PCollect](https://apps.apple.com/us/app/pcollect-k-pop-photocards/id6448884412) on the App Store (+1)\n- [Follow PCollect](https://www.tiktok.com/@pcollectapp?_t=8ir1lIoNe8p&_r=1) on TikTok (+1)\n- **CLICK THE BUTTONS BELOW WHEN YOU ARE DONE**\nWe will verify winners' entries. If you accidentally click a button, click again to undo.", color=int("FF2E98", 16))
     embed.add_field(name="__Entries__", value="", inline=False)
     giveaway_message = await interaction.channel.send(embed=embed)
     view = GiveawayView(giveaway_message)
