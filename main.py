@@ -48,7 +48,7 @@ async def on_interaction(interaction: discord.Interaction):
             message = await channel.fetch_message(GIVEAWAY_MESSAGE_ID)
             view = GiveawayView(message)
             await message.edit(view=view)
-            await view.handle_entry(interaction)
+            await view.handle_button_interaction(interaction)
 
 @client.event
 async def on_member_join(member):
@@ -164,7 +164,16 @@ class GiveawayView(ui.View):
     def __init__(self, message):
         super().__init__()
         self.message = message
-
+        
+    async def handle_button_interaction(self, interaction: discord.Interaction):
+        button_id = interaction.data.custom_id
+        if button_id == "default_entry":
+            await self.default_entry(interaction)
+        elif button_id == "rate_app":
+            await self.rate_app(interaction)
+        elif button_id == "follow_tiktok":
+            await self.follow_tiktok(interaction)
+            
     async def handle_entry(self, interaction: Interaction, entry_type: str):
         guild = interaction.guild
         member = guild.get_member(interaction.user.id)
