@@ -51,7 +51,7 @@ async def on_interaction(interaction: discord.Interaction):
                 await message.edit(view=view)
 
                 if isinstance(interaction.component, discord.ui.Button):
-                    await view.handle_button_interaction(interaction)
+                    await view.handle_entry(interaction)
             except:
                 print("Failed")
 
