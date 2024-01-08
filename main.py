@@ -177,7 +177,7 @@ class GiveawayView(ui.View):
             else:
                 current_entries += f" {entry_type}"
                 response_message = f"Your entries now include: **{entry_type}**"
-            lines[user_line_index] = f"{instagram_username} {user_identifier}: {current_entries}"
+            lines[user_line_index] = f"**@{instagram_username}** {user_identifier}: {current_entries}"
         else:
             lines.append(f"{instagram_username} {user_identifier}: {entry_type}")
             response_message = f"Your entries now include: **{entry_type}**"
