@@ -39,7 +39,10 @@ async def on_ready():
   GUILDS_ID = 1191857034254102528
   client.tree.copy_global_to(guild=discord.Object(id=GUILDS_ID))
   await client.tree.sync(guild=discord.Object(id=GUILDS_ID))
-  if GIVEAWAY_MESSAGE_ID:
+
+@client.event
+async def on_interaction():
+      if GIVEAWAY_MESSAGE_ID:
         channel_id = 1191860454495109360
         channel = client.get_channel(channel_id)
         if channel:
