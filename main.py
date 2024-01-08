@@ -39,6 +39,10 @@ async def on_ready():
   GUILDS_ID = 1191857034254102528
   client.tree.copy_global_to(guild=discord.Object(id=GUILDS_ID))
   await client.tree.sync(guild=discord.Object(id=GUILDS_ID))
+  channel = client.get_channel(channel_id)
+  message = await channel.fetch_message(GIVEAWAY_MESSAGE_ID)
+  view = GiveawayView(message)
+  await message.edit(view=view)
 
 @client.event
 async def on_interaction(interaction: discord.Interaction):
@@ -162,7 +166,7 @@ async def embed(interaction: discord.Interaction, title: str, message: str, colo
 
 class GiveawayView(ui.View):
     def __init__(self, message):
-        super().__init__()
+        super().__init__(timeout=None)
         self.message = message
         
     async def handle_button_interaction(self, interaction: discord.Interaction):
