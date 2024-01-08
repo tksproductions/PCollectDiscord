@@ -169,19 +169,23 @@ class GiveawayView(ui.View):
             lines = field_value.split('\n')
             for i, line in enumerate(lines):
                 if user_entry_line in line:
-                    if entry_type not in line:
+                    if entry_type in line:
+                        lines[i] = line.replace(entry_type, '').strip()
+                        response_message = f"Your **{entry_type}** entry has been removed.\nPress the button again to add it back."
+                    else:
                         lines[i] += f" {entry_type}"
+                        response_message = f"Your entries now include: **{entry_type}**"
                     break
-            field_value = '\n'.join(lines)
+            field_value = '\n'.join(lines).strip()
         else:
             field_value += f"\n{user_entry_line} {entry_type}"
-    
-        embed.clear_fields()
-        embed.add_field(name="Participants", value=field_value.strip(), inline=False)
-    
-        await self.message.edit(embed=embed)
-        response_message = f"You have updated your entries to include: **{entry_type}**\nWinners' entries will be verified. Press again if this was a mistake."
-        await interaction.response.send_message(response_message, ephemeral=True)
+            response_message = f"Your entries now include: **{entry_type}**"
+
+    embed.clear_fields()
+    embed.add_field(name="Participants", value=field_value if field_value else "No participants yet.", inline=False)
+
+    await self.message.edit(embed=embed)
+    await interaction.response.send_message(response_message, ephemeral=True)
     
     @ui.button(label="ENTER (+1)", style=discord.ButtonStyle.success, custom_id="default_entry")
     async def default_entry(self, interaction: Interaction, button: ui.Button):
