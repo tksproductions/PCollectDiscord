@@ -158,8 +158,8 @@ class GiveawayView(ui.View):
         guild = interaction.guild
         member = guild.get_member(interaction.user.id)
     
-        discord_username = member.display_name
-        instagram_username = member.nick if member.nick else member.name
+        discord_username = member.name
+        instagram_username = member.nick if member.nick else member.display_name
     
         embed = self.message.embeds[0]
         field_value = embed.fields[0].value if embed.fields else ""
