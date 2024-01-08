@@ -160,6 +160,7 @@ class GiveawayView(ui.View):
         self.message = message
 
     async def handle_entry(self, interaction: Interaction, entry_type: str):
+        conversion = {"E":"ENTER", "R":"RATING", "T":"TIKTOK", "3": "TAG3"}
         guild = interaction.guild
         member = guild.get_member(interaction.user.id)
 
@@ -173,7 +174,7 @@ class GiveawayView(ui.View):
         lines = field_value.split('\n') if field_value else []
         user_line_index = next((i for i, line in enumerate(lines) if user_identifier in line), None)
 
-        if entry_type in ["RATING", "TIKTOK", "TAG3"] and not any(user_identifier in line for line in lines):
+        if entry_type in ["R", "T", "3"] and not any(user_identifier in line for line in lines):
             await interaction.response.send_message("You need to enter the giveaway first (ENTER) before performing this action.", ephemeral=True)
             return
     
@@ -182,16 +183,16 @@ class GiveawayView(ui.View):
             current_entries = line_parts[1].strip() if len(line_parts) > 1 else ""
             if entry_type != "ENTER" and entry_type in current_entries:
                 current_entries = current_entries.replace(entry_type, '').strip()
-                response_message = f"Your **{entry_type}** entry has been removed."
+                response_message = f"Your **{conversion[entry_type]} ({entry_type})** entry has been removed."
             elif entry_type not in current_entries:
-                current_entries += f" {entry_type}"
-                response_message = f"Your entries now include: **{entry_type}**"
+                current_entries += f"{entry_type}"
+                response_message = f"Your entries now include: **{conversion[entry_type]} ({entry_type})**"
             else:
                 response_message = f"Your Instagram username has been updated to **@{instagram_username}**."
             lines[user_line_index] = f"**@{instagram_username}** {user_identifier}: {current_entries}"
         else:
             lines.append(f"**@{instagram_username}** {user_identifier}: {entry_type}")
-            response_message = f"Your entries now include: **{entry_type}**"
+            response_message = f"Thank you for entering the giveaway! You may now complete bonus entries."
     
         field_value = '\n'.join(lines).strip()
         embed.clear_fields()
@@ -202,19 +203,19 @@ class GiveawayView(ui.View):
 
     @ui.button(label="ENTER (+1)", style=discord.ButtonStyle.success, custom_id="default_entry")
     async def default_entry(self, interaction: Interaction, button: ui.Button):
-        await self.handle_entry(interaction, "ENTER")
+        await self.handle_entry(interaction, "E")
         
     @ui.button(label="RATING (+1)", style=discord.ButtonStyle.primary, custom_id="rate_app")
     async def rate_app(self, interaction: Interaction, button: ui.Button):
-        await self.handle_entry(interaction, "RATING")
+        await self.handle_entry(interaction, "R")
         
     @ui.button(label="TIKTOK (+1)", style=discord.ButtonStyle.primary, custom_id="follow_tiktok")
     async def follow_tiktok(self, interaction: Interaction, button: ui.Button):
-        await self.handle_entry(interaction, "TIKTOK")
+        await self.handle_entry(interaction, "T")
 
     @ui.button(label="TAG 3 (+1)", style=discord.ButtonStyle.primary, custom_id="tag_three")
     async def tag_three(self, interaction: Interaction, button: ui.Button):
-        await self.handle_entry(interaction, "TAG3")
+        await self.handle_entry(interaction, "3")
 
 @client.tree.command()
 @discord.app_commands.default_permissions(administrator=True)
