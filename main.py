@@ -52,6 +52,8 @@ async def on_interaction(interaction: discord.Interaction):
 
                 if isinstance(interaction.component, discord.ui.Button):
                     await view.handle_button_interaction(interaction)
+            except:
+                print("Failed")
 
 @client.event
 async def on_member_join(member):
