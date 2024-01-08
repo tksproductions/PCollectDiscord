@@ -32,12 +32,23 @@ def extract_photos(input_image, aspect_ratio=(5.5, 8.5), min_percentage=0.5):
 
 ## CLIENT ##
 client = commands.Bot(command_prefix=".", intents = discord.Intents.all(), activity=discord.Activity(type=discord.ActivityType.listening, name="Ditto"))
+GIVEAWAY_MESSAGE_ID = None 
 
 @client.event
 async def on_ready():
   GUILDS_ID = 1191857034254102528
   client.tree.copy_global_to(guild=discord.Object(id=GUILDS_ID))
   await client.tree.sync(guild=discord.Object(id=GUILDS_ID))
+  if GIVEAWAY_MESSAGE_ID:
+        channel_id = 1191860454495109360
+        channel = client.get_channel(channel_id)
+        if channel:
+            try:
+                message = await channel.fetch_message(GIVEAWAY_MESSAGE_ID)
+                view = GiveawayView(message)
+                await message.edit(view=view)
+            except:
+                pass
 
 @client.event
 async def on_member_join(member):
