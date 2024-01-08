@@ -177,7 +177,7 @@ class GiveawayView(ui.View):
         if user_line_index is not None:
             line_parts = lines[user_line_index].split(":")
             current_entries = line_parts[1].strip() if len(line_parts) > 1 else ""
-            if entry_type != "ENTER" and entry_type in current_entries:
+            if entry_type != "E" and entry_type in current_entries:
                 current_entries = current_entries.replace(entry_type, '').strip()
                 response_message = f"Your **{conversion[entry_type]} ({entry_type})** entry has been removed."
             elif entry_type not in current_entries:
@@ -187,8 +187,8 @@ class GiveawayView(ui.View):
                 response_message = f"Your Instagram username has been updated to **@{instagram_username}**."
             lines[user_line_index] = f"**@{instagram_username}** {user_identifier}: {current_entries}"
         else:
-            if entry_type != "ENTER":
-                await interaction.response.send_message("You need to enter the giveaway first (ENTER) before performing this action.", ephemeral=True)
+            if entry_type != "E":
+                await interaction.response.send_message("You have not yet entered the giveaway!", ephemeral=True)
                 return
             else:
                 lines.append(f"**@{instagram_username}** {user_identifier}: {entry_type}")
