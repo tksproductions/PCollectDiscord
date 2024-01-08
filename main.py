@@ -163,7 +163,7 @@ class GiveawayView(ui.View):
     
         embed = self.message.embeds[0]
         field_value = embed.fields[0].value if embed.fields else ""
-        user_entry_line = f"{discord_username} ({instagram_username}):"
+        user_entry_line = f"{instagram_username} ({discord_username}):"
     
         if user_entry_line in field_value:
             lines = field_value.split('\n')
