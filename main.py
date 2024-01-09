@@ -50,8 +50,8 @@ async def on_member_join(member):
     channel = client.get_channel(welcome_channel_id)
 
     embed = discord.Embed(
-        title=f"Welcome to PCollect Place!",
-        description=f"**We hope you enjoy your stay, {member.name}!**\nJoin the giveaway in <#1191860454495109360>\nInvite others using this link: https://discord.gg/vJQGrrc8r5\n{member.mention}",
+        title=f"Welcome to PCollect Place, {member.name}!",
+        description=f"Join the giveaway in <#1191860454495109360>\nInvite others using this link: https://discord.gg/vJQGrrc8r5\n\n**We hope you enjoy your stay!**",
         color=int("FF2E98", 16)
     )
     embed.set_thumbnail(url=member.avatar)
