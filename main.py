@@ -32,7 +32,7 @@ def extract_photos(input_image, aspect_ratio=(5.5, 8.5), min_percentage=0.5):
 
 ## CLIENT ##
 client = commands.Bot(command_prefix=".", intents = discord.Intents.all(), activity=discord.Activity(type=discord.ActivityType.listening, name="Ditto"))
-GIVEAWAY_MESSAGE_ID = 1194359515592806440 
+GIVEAWAY_MESSAGE_ID = 1194360970282283140 
 
 @client.event
 async def on_ready():
