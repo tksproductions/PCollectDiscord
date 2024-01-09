@@ -51,10 +51,11 @@ async def on_member_join(member):
 
     embed = discord.Embed(
         title=f"Welcome to PCollect Place!",
-        description=f"**We hope you enjoy your stay, {member.name}!**\n\nInvite others using this link: https://discord.gg/vJQGrrc8r5",
+        description=f"**We hope you enjoy your stay, {member.name}!**\n\nJoin the giveaway: <#1191860454495109360>",
         color=int("FF2E98", 16)
     )
     embed.set_thumbnail(url=member.avatar)
+    embed.set_footer(text = "Invite others using this link: https://discord.gg/vJQGrrc8r5")
     await channel.send(embed=embed)
 
 @client.tree.command()
@@ -225,6 +226,7 @@ async def giveaway(interaction: discord.Interaction):
     """
     embed = discord.Embed(title="ALBUM GIVEAWAY (PCOLLECT x 4GYUSEO)", description="**__3 Winners__**\n**G-IDLE 2nd Full Album [2]** *Version of your choice!*\nInternational Free Shipping\n\n**__To Enter__**\n- Follow [@4gyuseo](https://www.instagram.com/4gyuseo?igsh=MjBia3BiaXo2b25m&utm_source=qr) and [@pcollectapp](https://www.instagram.com/pcollectapp?igsh=MWFsc2toMmRxZHo3YQ%3D%3D&utm_source=qr) on Instagram\n- Like the [giveaway post](https://www.instagram.com/4gyuseo?igsh=MjBia3BiaXo2b25m&utm_source=qr) and share to story\n- Tag 3 friends in the comments\n- **MAKE YOUR SERVER NICKNAME YOUR INSTAGRAM USERNAME**\n- **CLICK THE GREEN ENTER BUTTON BELOW**\nIf you forget to change your nickname, click ENTER again and it will update your entry.\n\n**__Bonus Entries__**\n- Tag 3 MORE friends in the comments (+1)\n- [Rate PCollect](https://apps.apple.com/us/app/pcollect-k-pop-photocards/id6448884412) on the App Store (+1)\n- [Follow PCollect](https://www.tiktok.com/@pcollectapp?_t=8ir1lIoNe8p&_r=1) on TikTok (+1)\n- **CLICK THE BUTTONS BELOW WHEN YOU ARE DONE**\nWe will verify winners' entries. If you accidentally click a button, click again to undo.", color=int("FF2E98", 16))
     embed.add_field(name="__Entries__", value="", inline=False)
+    embed.set_footer(text = "Ends 2.1.24")
     giveaway_message = await interaction.channel.send(embed=embed)
     view = GiveawayView(giveaway_message)
     await giveaway_message.edit(view=view)
