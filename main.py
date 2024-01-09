@@ -51,7 +51,7 @@ async def on_member_join(member):
 
     embed = discord.Embed(
         title=f"Welcome to PCollect Place!",
-        description=f"**We hope you enjoy your stay, {member.name}!**\n\nJoin the giveaway: <#1191860454495109360>",
+        description=f"**We hope you enjoy your stay, {member.name}!**\nJoin the giveaway in <#1191860454495109360>\n{member.mention}",
         color=int("FF2E98", 16)
     )
     embed.set_thumbnail(url=member.avatar)
